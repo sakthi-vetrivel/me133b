@@ -6,6 +6,7 @@ obstacles = []
 visited = []
 workspace = [["0" for x in range(size)] for y in range(size)]
 goal,init = (0,0)
+path = []
 
 # function to create n random obstacles in the workspace
 def create_obstacles(n):
@@ -15,7 +16,6 @@ def create_obstacles(n):
         x = np.random.randint(0, size)
         y = np.random.randint(0,size)
         obstacles.append((w,h,x,y))
-    print(obstacles)
 
 # Add obstacles once they have been created to the workspace
 def add_obstacles():
@@ -99,7 +99,6 @@ def label_cells():
     # Add all zero labels to queue
     visited.append((size-1,size-1))
     push_adj(size-1, size-1)
-    print(visited)
 
     # While loop to set all values
     i = 0
@@ -117,7 +116,7 @@ def label_cells():
     print_w()
 
 def check(i, j, value, n):
-    if (i >= 0 and i <= size-1 and j >= 0 and j <=size-1 and workspace[i][j] == str(value - 1)):
+    if (i >= 0 and i <= size-1 and j >= 0 and j <=size-1 and workspace[i][j] == str(value)):
         n.append((i,j))
 
 
@@ -131,19 +130,19 @@ def find_lower_neighbor(x, y, value):
     check(x - 1, y - 1, value - 1, n)
     check(x + 1, y + 1, value - 1, n)
     check(x + 1, y - 1, value - 1, n)
-
-    print(n)
+    return n
 
 
 def find_path():
-    path = []
     x = 0
     y = 0
-    while((x,y) != goal):
-        options = find_lower_neighbor(x,y)
-        i = np.choice.randint(len(options))
-
-
+    while((x,y) != (size - 1, size - 1)):
+        path.append((x,y))
+        options = find_lower_neighbor(x,y, int(workspace[x][y]))
+        i = np.random.randint(len(options))
+        x = options[i][0]
+        y = options[i][1]
+    path.append((size - 1, size - 1))
 
 create_obstacles(4)
 add_obstacles()
@@ -154,5 +153,8 @@ label_cells()
 
 if (workspace[0][0] != "0"):
     print("There's a path from init to the goal!")
+    find_path()
+    print(path)
+    # This is where the visualization should happen
 else:
     print("There is no path from init to the goal")
