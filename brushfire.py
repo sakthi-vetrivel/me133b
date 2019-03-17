@@ -85,10 +85,10 @@ def get_min_of_neighbors(x, y):
     min = size*size
     min = get_min(x+1, y, min)
     min = get_min(x-1, y, min)
-    min = get_min(x+1, y-1, min)
-    min = get_min(x-1, y-1, min)
-    min = get_min(x+1, y+1, min)
-    min = get_min(x-1, y+1, min)
+    #min = get_min(x+1, y-1, min)
+    #min = get_min(x-1, y-1, min)
+    #min = get_min(x+1, y+1, min)
+    #min = get_min(x-1, y+1, min)
     min = get_min(x, y+1, min)
     min = get_min(x, y-1, min)
 
@@ -146,8 +146,7 @@ def find_path():
         y = options[i][1]
     path.append((size - 1, size - 1))
 
-create_obstacles(1)
-print(obstacles)
+create_obstacles(10)
 add_obstacles()
 set_goal()
 set_init()
@@ -157,7 +156,6 @@ label_cells()
 if (workspace[0][0] != "0"):
     print("There's a path from init to the goal!")
     find_path()
-    print(path)
 
     create_world(size)
     draw_obstacles(obstacles)
