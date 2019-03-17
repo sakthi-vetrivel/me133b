@@ -1,5 +1,6 @@
 import numpy as np
 import sys
+from visualizer import *
 
 size = 10
 obstacles = []
@@ -11,10 +12,11 @@ path = []
 # function to create n random obstacles in the workspace
 def create_obstacles(n):
     for i in range(n):
+        x = np.random.randint(0, size - 1)
+        y = np.random.randint(0,size - 1)
         w = np.random.randint(1, size/2)
         h = np.random.randint(1, size/2)
-        x = np.random.randint(0, size)
-        y = np.random.randint(0,size)
+
         obstacles.append((w,h,x,y))
 
 # Add obstacles once they have been created to the workspace
@@ -144,7 +146,8 @@ def find_path():
         y = options[i][1]
     path.append((size - 1, size - 1))
 
-create_obstacles(4)
+create_obstacles(1)
+print(obstacles)
 add_obstacles()
 set_goal()
 set_init()
@@ -155,6 +158,11 @@ if (workspace[0][0] != "0"):
     print("There's a path from init to the goal!")
     find_path()
     print(path)
+
+    create_world(size)
+    draw_obstacles(obstacles)
+    draw_path(path)
+    done()
     # This is where the visualization should happen
 else:
     print("There is no path from init to the goal")
